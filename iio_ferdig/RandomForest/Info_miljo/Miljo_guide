@@ -42,7 +42,7 @@ STEG 2: Aktiver miljøet
   source ~/miljo/tsfresh/bin/activate
 
 Du vil se at prompten endres til:
-  (tsfresh) erlend@erlendB:~$
+  (tsfresh) name@name:~$
 
 Dette bekrefter at miljøet er aktivt.
 
