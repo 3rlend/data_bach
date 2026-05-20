@@ -1,11 +1,10 @@
 // iio_server.cpp - LSM6DSOX accelerometer multicast server (kontinuerlig modus)
 // Bygger på logikken fra iio_test.cpp, men sender NUM_SAMPLES per UDP-pakke.
 // Server sender kun batch_ts i headeren - klienten gjør all tidsutregning.
-// ENDRET: Kjører kontinuerlig til Ctrl+C (ingen sesjoner/antall_loops).
-//         Klienten styrer varighet og filhåndtering selv.
+// Klienten styrer varighet og filhåndtering selv.
 
 #include <iostream>
-#include <iomanip>
+#include <iomanip>r ---
 #include <vector>
 #include <cstdint>
 #include <cstring>
@@ -30,7 +29,7 @@ using namespace std;
 static volatile bool running = true;
 void signal_handler(int) { running = false; }
 
-#pragma pack(push, 1)
+#pragma pack(push, 1) //Fjerne unødvendig filler mellom bytsene
 struct Sample {
     int16_t x;
     int16_t y;
@@ -244,7 +243,7 @@ int main()
         total_loops++;
     }
 
-    // Oppsummering ved avslutning
+    // Oppsummering ved avslutning i terminal
     auto t_end = chrono::steady_clock::now();
     double total_s = chrono::duration<double>(t_end - t_start).count();
 
@@ -255,6 +254,7 @@ int main()
     cout << "Gjennomsnitt:  " << setprecision(1) << (sequence / total_s) << " pakker/sek"
          << "  (~" << setprecision(0) << (sequence * NUM_SAMPLES / total_s) << " Hz)\n";
 
+    //iio sluttoprasjoner
     iio_buffer_destroy(buf);
     iio_context_destroy(ctx);
     close(sockfd);

@@ -1,0 +1,161 @@
+=====================================================
+  BRUKERVEILEDNING: Sette opp tsfresh Python-miljø
+=====================================================
+
+Denne guiden forklarer hvordan du oppretter et virtuelt Python-miljø
+og installerer alle nødvendige pakker for å bruke tsfresh.
+
+
+-----------------------------------------------------
+FORUTSETNINGER
+-----------------------------------------------------
+
+Følgende må være installert på systemet:
+
+  - Python 3 (anbefalt 3.10 eller nyere)
+  - pip (følger vanligvis med Python)
+  - venv (følger med Python 3 som standard)
+
+Sjekk at Python er installert:
+  python3 --version
+
+Sjekk at pip er tilgjengelig:
+  pip --version
+
+
+-----------------------------------------------------
+STEG 1: Opprett virtuelt miljø
+-----------------------------------------------------
+
+Naviger til ønsket mappe og kjør:
+
+  python3 -m venv ~/miljo/tsfresh
+
+Dette oppretter et isolert Python-miljø i ~/miljo/tsfresh/
+slik at pakkene ikke påvirker resten av systemet.
+
+
+-----------------------------------------------------
+STEG 2: Aktiver miljøet
+-----------------------------------------------------
+
+  source ~/miljo/tsfresh/bin/activate
+
+Du vil se at prompten endres til:
+  (tsfresh) erlend@erlendB:~$
+
+Dette bekrefter at miljøet er aktivt.
+
+NB: Miljøet må aktiveres på nytt hver gang du åpner en ny terminal.
+
+
+-----------------------------------------------------
+STEG 3: Installer pakkene
+-----------------------------------------------------
+
+Med miljøet aktivert, installer alle pakkene via requirements.txt:
+
+  pip install -r requirements.txt
+
+Dette installerer følgende pakker (og deres avhengigheter):
+
+
+  KJERNEPAKKER:
+  ┌─────────────────────┬──────────────┬────────────────────────────────────┐
+  │ Pakke               │ Versjon      │ Formål                             │
+  ├─────────────────────┼──────────────┼────────────────────────────────────┤
+  │ tsfresh             │ 0.21.1       │ Automatisk tidsserieanalyse        │
+  │ numpy               │ 2.4.4        │ Numeriske beregninger              │
+  │ pandas              │ 3.0.2        │ Datahåndtering og tabeller         │
+  │ scipy               │ 1.17.1       │ Vitenskapelige beregninger         │
+  │ scikit-learn        │ 1.8.0        │ Maskinlæring                       │
+  │ statsmodels         │ 0.14.6       │ Statistiske modeller               │
+  └─────────────────────┴──────────────┴────────────────────────────────────┘
+
+  VISUALISERING:
+  ┌─────────────────────┬──────────────┬────────────────────────────────────┐
+  │ matplotlib          │ 3.10.9       │ Plotting og grafer                 │
+  │ seaborn             │ 0.13.2       │ Statistisk visualisering           │
+  └─────────────────────┴──────────────┴────────────────────────────────────┘
+
+  YTELSE / PARALLELLISERING:
+  ┌─────────────────────┬──────────────┬────────────────────────────────────┐
+  │ numba               │ 0.65.1       │ JIT-kompilering for rask kode      │
+  │ llvmlite            │ 0.47.0       │ Avhengighet for numba              │
+  │ joblib              │ 1.5.3        │ Parallell jobkjøring               │
+  │ threadpoolctl       │ 3.6.0        │ Trådkontroll                       │
+  └─────────────────────┴──────────────┴────────────────────────────────────┘
+
+  ANDRE:
+  ┌─────────────────────┬──────────────┬────────────────────────────────────┐
+  │ stumpy              │ 1.14.1       │ Matriseprofil for tidsserier       │
+  │ cloudpickle         │ 3.1.2        │ Serialisering av Python-objekter   │
+  │ requests            │ 2.33.1       │ HTTP-forespørsler                  │
+  │ tqdm                │ 4.67.3       │ Fremdriftslinjer                   │
+  │ patsy               │ 1.0.2        │ Statistiske modellformler          │
+  │ PyWavelets          │ 1.9.0        │ Wavelet-transformasjoner           │
+  │ pillow              │ 12.2.0       │ Bildebehandling                    │
+  └─────────────────────┴──────────────┴────────────────────────────────────┘
+
+  (certifi, charset-normalizer, idna, urllib3, six, packaging,
+   pyparsing, python-dateutil, kiwisolver, cycler, fonttools,
+   contourpy er støttepakker som installeres automatisk)
+
+
+-----------------------------------------------------
+STEG 4: Verifiser installasjonen
+-----------------------------------------------------
+
+Sjekk at alt er installert korrekt:
+
+  pip list
+
+Test at tsfresh kan importeres:
+
+  python3 -c "import tsfresh; print('tsfresh OK, versjon:', tsfresh.__version__)"
+
+
+-----------------------------------------------------
+DAGLIG BRUK
+-----------------------------------------------------
+
+Aktiver miljøet (må gjøres ved hver ny terminalsesjon):
+  source ~/miljo/tsfresh/bin/activate
+
+Deaktiver miljøet når du er ferdig:
+  deactivate
+
+Sjekk hvilken Python som brukes (skal peke inn i miljøet):
+  which python
+
+
+-----------------------------------------------------
+OPPDATERE PAKKELISTEN
+-----------------------------------------------------
+
+Hvis du installerer nye pakker og vil lagre den oppdaterte listen:
+
+  pip freeze > requirements.txt
+
+
+-----------------------------------------------------
+FEILSØKING
+-----------------------------------------------------
+
+Problem: "python3: command not found"
+  Løsning: Installer Python via:  sudo apt install python3
+
+Problem: "pip: command not found"
+  Løsning: Installer pip via:  sudo apt install python3-pip
+
+Problem: Treg installasjon av numba/llvmlite
+  Info: Disse er store pakker og tar tid – dette er normalt.
+
+Problem: Miljøet aktiveres ikke etter omstart
+  Løsning: Husk å kjøre source-kommandoen igjen:
+           source ~/miljo/tsfresh/bin/activate
+
+
+=====================================================
+  Laget for Linux (testet på Linux Mint / Ubuntu)
+=====================================================
